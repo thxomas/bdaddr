@@ -46,7 +46,8 @@ ST Microelectronics (ST) and some Intel Corporation chips
 Options
 -------
 
-```-h
+```
+-h
 	Gives a list of possible commands.
 
 -i <dev>
