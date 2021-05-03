@@ -46,7 +46,7 @@ ST Microelectronics (ST) and some Intel Corporation chips
 Options
 -------
 
--h
+```-h
 	Gives a list of possible commands.
 
 -i <dev>
@@ -60,7 +60,7 @@ CSR devices only :
 
 -t
 	Temporary change. Do not write to non-volatile memory.
-
+```
 FILES
 =====
 
@@ -69,6 +69,13 @@ FILES
 :	IEEE Organizationally Unique Identifier master file.
 	Manually update from: http://standards.ieee.org/regauth/oui/oui.txt
 	(optional)
+
+BUILD
+=====
+
+libbluetooth-dev package must be installed.
+
+To build, just type ```make``` in the source directory.
 
 BUGS
 ====
