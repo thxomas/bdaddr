@@ -283,6 +283,40 @@ static int intel_reset_device(int dd)
 	return -1;	// request Manual reset
 }
 
+#define OCF_CYS_WRITE_BD_ADDR           0x001
+typedef struct {
+        bdaddr_t        bdaddr;
+} __attribute__ ((packed)) cys_write_bd_addr_cp;
+#define CYS_WRITE_BD_ADDR_CP_SIZE 6
+
+static int cys_write_bd_addr(int dd, bdaddr_t *bdaddr)
+{
+        struct hci_request rq;
+        cys_write_bd_addr_cp cp;
+
+        memset(&cp, 0, sizeof(cp));
+        bacpy(&cp.bdaddr, bdaddr);
+
+        memset(&rq, 0, sizeof(rq));
+        rq.ogf    = OGF_VENDOR_CMD;
+        rq.ocf    = OCF_CYS_WRITE_BD_ADDR;
+        rq.cparam = &cp;
+        rq.clen   = CYS_WRITE_BD_ADDR_CP_SIZE;
+        rq.rparam = NULL;
+        rq.rlen   = 0;
+
+        if (hci_send_req(dd, &rq, 1000) < 0)
+                return -1;
+
+        return 0;
+}
+
+static int cys_reset_device(int dd)
+{
+        return -1;      // request Manual reset
+}
+
+
 #define OCF_ZEEVO_WRITE_BD_ADDR		0x0001
 typedef struct {
 	bdaddr_t	bdaddr;
@@ -329,6 +363,7 @@ static struct {
 	{ 18,		zeevo_write_bd_addr,	NULL			},
 	{ 48,		st_write_bd_addr,	generic_reset_device	},
 	{ 57,		ericsson_write_bd_addr,	generic_reset_device	},
+	{ 305,		cys_write_bd_addr,      cys_reset_device        },
 	{ 65535,	NULL,			NULL			},
 };
 
