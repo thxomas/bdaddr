@@ -1,17 +1,8 @@
-CC=gcc
-LINK_OPT=-lbluetooth
+CC ?= gcc
 RM=rm
 
-default: bdaddr
-
 bdaddr: bdaddr.o oui.o
-	$(CC) -o bdaddr bdaddr.o oui.o $(LINK_OPT)
-
-bdaddr.o: bdaddr.c
-	$(CC) -c bdaddr.c
-
-oui.o: oui.c
-	$(CC) -c oui.c
+	$(CC) $(LDFLAGS) -o $@ $^ -lbluetooth
 
 clean:
 	$(RM) -f *.o
